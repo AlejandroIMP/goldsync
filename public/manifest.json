@@ -1,0 +1,33 @@
+{
+  "name": "GoldSync - NFC Networking Profesional",
+  "short_name": "GoldSync",
+  "description": "Dispositivo NFC innovador que revoluciona el networking profesional en Guatemala",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#F39C12",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.webp",
+      "sizes": "192x192 512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["productivity", "business"],
+  "screenshots": [
+    {
+      "src": "/logo.webp",
+      "sizes": "540x720",
+      "form_factor": "narrow"
+    }
+  ]
+}

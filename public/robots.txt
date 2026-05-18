@@ -1,0 +1,22 @@
+# GoldSync robots.txt
+# Permitir a todos los buscadores indexar el sitio
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /private
+
+# Google-specific rules
+User-agent: Googlebot
+Allow: /
+
+# Bing-specific rules
+User-agent: Bingbot
+Allow: /
+
+# Sitemaps
+Sitemap: https://goldsync.gt/sitemap.xml
+Sitemap: https://goldsync.gt/sitemap-pages.xml
+
+# Crawl delay (opcional, en segundos)
+Crawl-delay: 1
