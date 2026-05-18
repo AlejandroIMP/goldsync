@@ -8,7 +8,6 @@ import {
   Leaf,
   CheckCircle,
   Shield,
-  MapPin,
   Bluetooth,
   Eye,
 } from 'lucide-react'
