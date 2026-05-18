@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-gold-50: #FFF9F0;
+  --color-gold-100: #FFEDD5;
+  --color-gold-200: #FFD9AA;
+  --color-gold-300: #FFC080;
+  --color-gold-400: #FFB366;
+  --color-gold-500: #F39C12;
+  --color-gold-600: #E67E22;
+  --color-gold-700: #CC6600;
+  --color-gold-800: #B35900;
+  --color-gold-900: #994C00;
+
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-opensans: "Open Sans", sans-serif;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+  }
+
+  body {
+    font-family: var(--font-opensans);
+    background: #ffffff;
+    color: #1a1a1a;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-montserrat);
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-gold-500 hover:bg-gold-600 text-white font-montserrat font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 border-2 border-gold-500 text-gold-500 hover:bg-gold-500 hover:text-white font-montserrat font-semibold rounded-lg transition-all duration-300;
+  }
+  
+  .section-padding {
+    @apply px-4 md:px-8 lg:px-16 py-16 md:py-24 lg:py-32;
+  }
+  
+  .container-wide {
+    @apply max-w-7xl mx-auto;
+  }
+}
+
+@layer utilities {
+  button, input, textarea {
+    @apply transition-all duration-300;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    @apply outline-none;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #F39C12;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e67e22;
+}
