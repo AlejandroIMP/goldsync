@@ -48,7 +48,6 @@ function Home() {
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
     const templateAutoreply = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_AUTOREPLY
     const templateNotification = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_NOTIFICATION
-    const recipientEmail = import.meta.env.VITE_EMAILJS_RECIPIENT_EMAIL || 'goldsync@gmail.com'
 
     if (!serviceId || !templateAutoreply || !templateNotification) {
       setError('Configuración de EmailJS incompleta. Por favor contacta al administrador.')
@@ -63,14 +62,14 @@ function Home() {
       from_name: 'GoldSync - Confirmación de Solicitud',
     }
 
-    // Email a nosotros (Notification)
+    // Email a nosotros (Notification) - Variables ajustadas al template
     const notificationEmailParams = {
-      to_email: recipientEmail,
-      user_name: formData.nombre,
-      user_email: formData.email,
-      user_phone: formData.telefono,
-      user_profession: formData.profesion,
-      from_name: 'GoldSync - Nuevo Contacto',
+      to_email: 'goldsyncgt@gmail.com',
+      from_name: formData.nombre,
+      from_email: formData.email,
+      from_phone: formData.telefono,
+      from_profession: formData.profesion,
+      message: `Usuario interesado en GoldSync - Edición Limitada para Fundadores`,
     }
 
     // Enviar ambos emails
