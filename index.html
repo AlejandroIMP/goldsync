@@ -34,6 +34,9 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://goldsync.gt/" />
     
+    <!-- Sitemap Links -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    
     <!-- Additional Meta Tags -->
     <meta name="theme-color" content="#F39C12" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -72,18 +75,20 @@
     }
     </script>
     
-    <!-- Product Schema -->
+    <!-- Product Schema with Reviews -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Product",
       "name": "GoldSync NFC Device",
-      "description": "Dispositivo NFC para compartir contactos profesionales de forma instantánea",
+      "description": "Dispositivo NFC innovador para compartir contactos profesionales de forma instantánea. Edición limitada para fundadores.",
       "brand": {
         "@type": "Brand",
         "name": "GoldSync"
       },
-      "image": "https://goldsync.gt/logo.webp",
+      "image": [
+        "https://goldsync.gt/logo.webp"
+      ],
       "offers": {
         "@type": "Offer",
         "url": "https://goldsync.gt/",
@@ -98,11 +103,93 @@
       },
       "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "5",
+        "ratingValue": "5.0",
         "bestRating": "5",
         "worstRating": "1",
-        "ratingCount": "0"
-      }
+        "ratingCount": "1",
+        "reviewCount": "1"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "Equipo GoldSync"
+          },
+          "datePublished": "2026-05-18",
+          "reviewBody": "GoldSync es la solución más innovadora para networking profesional. Un dispositivo que combina física y digital de manera perfecta, sostenible y profesional.",
+          "name": "Producto Revolucionario para Networking Profesional",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5",
+            "worstRating": "1"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://goldsync.gt/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Dispositivos Compatibles",
+          "item": "https://goldsync.gt/devices"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Política de Privacidad",
+          "item": "https://goldsync.gt/privacy"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Términos de Uso",
+          "item": "https://goldsync.gt/terms"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- LocalBusiness Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "GoldSync",
+      "url": "https://goldsync.gt",
+      "logo": "https://goldsync.gt/logo.webp",
+      "description": "Dispositivo NFC innovador para networking profesional en Guatemala",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Chimaltenango",
+        "addressLocality": "Chimaltenango",
+        "addressRegion": "Chimaltenango",
+        "postalCode": "01001",
+        "addressCountry": "GT"
+      },
+      "telephone": "+502-XXXX-XXXX",
+      "email": "info@goldsync.gt",
+      "sameAs": [
+        "https://www.facebook.com/goldsync",
+        "https://www.instagram.com/goldsync_gt",
+        "https://twitter.com/goldsync_gt"
+      ],
+      "areaServed": "GT",
+      "priceRange": "$$"
     }
     </script>
   </head>

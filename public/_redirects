@@ -1,0 +1,16 @@
+# Netlify redirects configuration
+# Ensure SPA routing works correctly and avoid unwanted redirects
+
+# Redirect all requests to index.html for SPA routing
+/*    /index.html   200
+
+# Allow direct access to public files
+/sitemap.xml          /sitemap.xml   200
+/sitemap.txt          /sitemap.txt   200
+/robots.txt           /robots.txt    200
+/manifest.json        /manifest.json 200
+/favicon.svg          /favicon.svg   200
+/logo.webp            /logo.webp     200
+
+# Prevent double redirects
+/index.html           /index.html    200
