@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import emailjs from '@emailjs/browser'
 import {
   Zap,
   Smartphone,
@@ -21,6 +22,13 @@ function Home() {
     profesion: '',
   })
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
+  }, [])
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -29,13 +37,39 @@ function Home() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Preparado para EmailJS - aquí irá la integración
-    console.log('Form data:', formData)
-    setFormSubmitted(true)
-    setTimeout(() => {
-      setFormData({ nombre: '', email: '', telefono: '', profesion: '' })
-      setFormSubmitted(false)
-    }, 3000)
+    setIsLoading(true)
+    setError('')
+
+    const templateParams = {
+      to_email: 'info@goldsync.gt',
+      user_name: formData.nombre,
+      user_email: formData.email,
+      user_phone: formData.telefono,
+      user_profession: formData.profesion,
+      from_name: 'GoldSync - Formulario de Contacto',
+    }
+
+    emailjs
+      .send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams
+      )
+      .then((response) => {
+        console.log('Email enviado:', response)
+        setFormSubmitted(true)
+        setIsLoading(false)
+        // Reset form después de 3 segundos
+        setTimeout(() => {
+          setFormData({ nombre: '', email: '', telefono: '', profesion: '' })
+          setFormSubmitted(false)
+        }, 3000)
+      })
+      .catch((err) => {
+        console.error('Error al enviar email:', err)
+        setError('Error al enviar el formulario. Por favor intenta de nuevo.')
+        setIsLoading(false)
+      })
   }
 
   const scrollToForm = () => {
@@ -545,7 +579,7 @@ function Home() {
                   ¡Gracias!
                 </h3>
                 <p className="font-opensans">
-                  Tu solicitud ha sido registrada. Te contactaremos pronto.
+                  Tu solicitud ha sido registrada. Te contactaremos pronto a {formData.email}
                 </p>
               </motion.div>
             ) : (
@@ -554,6 +588,16 @@ function Home() {
                 className="bg-gray-800 p-8 rounded-2xl space-y-6 border border-gold-500 border-opacity-30"
                 variants={itemVariants}
               >
+                {error && (
+                  <motion.div
+                    className="bg-red-500 text-white p-4 rounded-lg border border-red-600"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <p className="font-opensans">{error}</p>
+                  </motion.div>
+                )}
+
                 <div>
                   <label className="block  font-semibold mb-2">
                     Nombre Completo
@@ -563,8 +607,9 @@ function Home() {
                     name="nombre"
                     value={formData.nombre}
                     onChange={handleFormChange}
+                    disabled={isLoading}
                     required
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-gold-500 focus:outline-none transition-colors font-opensans"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-gold-500 focus:outline-none transition-colors font-opensans disabled:opacity-50"
                     placeholder="Tu nombre"
                   />
                 </div>
@@ -578,8 +623,9 @@ function Home() {
                     name="email"
                     value={formData.email}
                     onChange={handleFormChange}
+                    disabled={isLoading}
                     required
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-gold-500 focus:outline-none transition-colors font-opensans"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-gold-500 focus:outline-none transition-colors font-opensans disabled:opacity-50"
                     placeholder="tu@email.com"
                   />
                 </div>
@@ -593,8 +639,9 @@ function Home() {
                     name="telefono"
                     value={formData.telefono}
                     onChange={handleFormChange}
+                    disabled={isLoading}
                     required
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-gold-500 focus:outline-none transition-colors font-opensans"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-gold-500 focus:outline-none transition-colors font-opensans disabled:opacity-50"
                     placeholder="+502 XXXX XXXX"
                   />
                 </div>
@@ -608,19 +655,21 @@ function Home() {
                     name="profesion"
                     value={formData.profesion}
                     onChange={handleFormChange}
+                    disabled={isLoading}
                     required
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-gold-500 focus:outline-none transition-colors font-opensans"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-gold-500 focus:outline-none transition-colors font-opensans disabled:opacity-50"
                     placeholder="Ej: Software Engineer @ Google"
                   />
                 </div>
 
                 <motion.button
                   type="submit"
-                  className="btn-primary w-full text-lg font-bold py-4"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={isLoading}
+                  className="btn-primary w-full text-lg font-bold py-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                  whileHover={!isLoading ? { scale: 1.02 } : {}}
+                  whileTap={!isLoading ? { scale: 0.98 } : {}}
                 >
-                  Asegurar mi GoldSync de Lanzamiento
+                  {isLoading ? 'Enviando...' : 'Asegurar mi GoldSync de Lanzamiento'}
                 </motion.button>
 
                 <p className="text-xs text-gray-400 text-center font-opensans">

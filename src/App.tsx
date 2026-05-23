@@ -608,17 +608,17 @@ function App() {
               <ul className="space-y-2 text-sm font-opensans">
                 <li>
                   <a href="#" className="hover:text-gold-500 transition-colors">
-                    @goldsync_gt
+                    @goldsync_gtm
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-gold-500 transition-colors">
+                  <a href="https://www.instagram.com/goldsync_gtm/" target="_blank" rel="noopener noreferrer" className="hover:text-gold-500 transition-colors">
                     Instagram
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-gold-500 transition-colors">
-                    Facebook
+                  <a href="https://www.tiktok.com/@gold.sync2" target="_blank" rel="noopener noreferrer" className="hover:text-gold-500 transition-colors">
+                    Tiktok
                   </a>
                 </li>
               </ul>
