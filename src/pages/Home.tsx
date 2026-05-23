@@ -27,7 +27,12 @@ function Home() {
 
   // Initialize EmailJS
   useEffect(() => {
-    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    if (publicKey) {
+      emailjs.init(publicKey)
+    } else {
+      console.error('EmailJS public key not found in environment variables')
+    }
   }, [])
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,30 +45,43 @@ function Home() {
     setIsLoading(true)
     setError('')
 
-    const templateParams = {
-      to_email: 'info@goldsync.gt',
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+    const templateAutoreply = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_AUTOREPLY
+    const templateNotification = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_NOTIFICATION
+    const recipientEmail = import.meta.env.VITE_EMAILJS_RECIPIENT_EMAIL || 'goldsync@gmail.com'
+
+    if (!serviceId || !templateAutoreply || !templateNotification) {
+      setError('Configuración de EmailJS incompleta. Por favor contacta al administrador.')
+      setIsLoading(false)
+      return
+    }
+
+    // Email al usuario (Autoreply)
+    const userEmailParams = {
+      to_email: formData.email,
+      user_name: formData.nombre,
+      from_name: 'GoldSync - Confirmación de Solicitud',
+    }
+
+    // Email a nosotros (Notification)
+    const notificationEmailParams = {
+      to_email: recipientEmail,
       user_name: formData.nombre,
       user_email: formData.email,
       user_phone: formData.telefono,
       user_profession: formData.profesion,
-      from_name: 'GoldSync - Formulario de Contacto',
+      from_name: 'GoldSync - Nuevo Contacto',
     }
 
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        templateParams
-      )
-      .then((response) => {
-        console.log('Email enviado:', response)
+    // Enviar ambos emails
+    Promise.all([
+      emailjs.send(serviceId, templateAutoreply, userEmailParams),
+      emailjs.send(serviceId, templateNotification, notificationEmailParams),
+    ])
+      .then((responses) => {
+        console.log('Emails enviados:', responses)
         setFormSubmitted(true)
         setIsLoading(false)
-        // Reset form después de 3 segundos
-        setTimeout(() => {
-          setFormData({ nombre: '', email: '', telefono: '', profesion: '' })
-          setFormSubmitted(false)
-        }, 3000)
       })
       .catch((err) => {
         console.error('Error al enviar email:', err)
